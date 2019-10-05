@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <title>Real-Time Colors </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+       
+        $(document).ready(function () {
+            var socket = io();
+            socket.on('updateNewUser', function (data) {
+                    console.log(data.color)
+                    $("#body").attr("style","background-color: "+data.color+";")
+                });
+                socket.on('updateAllClients', function (data) {
+                    console.log(data.color)
+                    $("#body").attr("style","background-color: "+data.color+";")
+                });
+            $('#Green').submit(function (e) {
+                socket.emit('change_BG', {color:"green"})
+                e.preventDefault();
+            });
+            $('#Blue').submit(function (e) {
+                socket.emit('change_BG', {color:"blue"})
+                e.preventDefault();
+            });
+            $('#Pink').submit(function (e) {
+                socket.emit('change_BG', {color:"pink"})
+                e.preventDefault();
+            });
+        })
+
+    </script>
+</head>
+<body id="body">
+    <div id="wrapper">
+        <h1 id="counter"></h1>
+
+        <form id="Green" >
+            <button class="btn" type="submit">Green</button>
+        </form>
+        <form id="Blue" >
+            <button class="btn" type="submit">Blue</button>
+        </form>
+        <form id="Pink" >
+            <button class="btn" type="submit">Pink</button>
+        </form>
+    </div>
+</body>
+</html>
